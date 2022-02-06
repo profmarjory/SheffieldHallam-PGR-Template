@@ -634,6 +634,7 @@ supported!}
     bookmarksnumbered=true,
     breaklinks=true,
     linktocpage,
+    linktoc=all,
     colorlinks=true,
     linkcolor=black,
     urlcolor=black,
@@ -671,6 +672,7 @@ supported!}
     bookmarksnumbered=true,
     breaklinks=true,
     linktocpage,
+    linktoc = all,
     colorlinks=true,
     linkcolor=blue,
     urlcolor=blue,
@@ -1163,7 +1165,7 @@ Director(s) of Studies:
 }
 % Abstract content appears here
 {
-\\
+\par
 \noindent
 \textit{Keywords}:
 \@keywords \\
@@ -1282,10 +1284,10 @@ Director(s) of Studies:
     \end{center}
   }{
     % college is defined
-    \begin{minipage}[b]{0.54\textwidth}
+    \begin{minipage}[b]{0.69\textwidth}
       \flushleft\@college
     \end{minipage}
-    \begin{minipage}[b]{0.44\textwidth}
+    \begin{minipage}[b]{0.29\textwidth}
       \flushright \@degreedate
     \end{minipage}
   } % college is defined
