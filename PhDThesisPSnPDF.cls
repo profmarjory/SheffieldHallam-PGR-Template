@@ -862,6 +862,10 @@ wish to left align your text}
 \newcommand{\@degreedate}{\monthname[\the\month]\space\the\year}
 \newcommand{\degreedate}[1]{\renewcommand{\@degreedate}{#1}}
 
+% The subject of the award
+\newcommand{\@awardsubject}{\hl{SET awardsubject}}
+\newcommand{\awardsubject}[1]{\renewcommand{\@awardsubject}{#1}}
+
 % The full (unabbreviated) name of the degree
 \newcommand{\@degreetitle}{}
 \newcommand{\degreetitle}[1]{\renewcommand{\@degreetitle}{#1}}
@@ -875,7 +879,7 @@ wish to left align your text}
 \newcommand{\college}[1]{\renewcommand{\@college}{#1}}
 
 % The name of your University
-\newcommand{\@university}{}
+\newcommand{\@university}{\hl{SET university}}
 \newcommand{\university}[1]{\renewcommand{\@university}{#1}}
 
 % Defining the crest
@@ -910,7 +914,7 @@ wish to left align your text}
 
 % keywords (These keywords will appear in the PDF meta-information
 % called `pdfkeywords`.)
-\newcommand{\@keywords}{}
+\newcommand{\@keywords}{-}
 \newcommand{\keywords}[1]{\renewcommand{\@keywords}{#1}}
 
 % subjectline (This subject will appear in the PDF meta-information
@@ -934,6 +938,28 @@ wish to left align your text}
 \fi
 }
 
+\newcommand{\detailtexcount}[1]{%
+  \immediate\write18{texcount -merge -sum -q -utf8 #1.tex output.bbl > #1.wcdetail }%
+  \verbatiminput{#1.wcdetail}%
+}
+
+\newcommand{\quickwordcount}[1]{%
+  \immediate\write18{texcount -1 -merge -sum -q -utf8 #1.tex output.bbl > #1-words.sum }%
+  \input{#1-words.sum} words%
+}
+
+% The word count of the document
+% reference: https://www.overleaf.com/learn/how-to/Is_there_a_way_to_run_a_word_count_that_doesn%27t_include_LaTeX_commands%3F
+\newcommand{\@wordcount}{\quickwordcount{thesis}\space}
+\newcommand{\wordcount}[1]{\renewcommand{\@wordcount}{#1}}
+
+% The supervisors displayed in the abstract.
+\newcommand{\@supervisoryteam}{\hl{SET supervisoryteam}}
+\newcommand{\supervisoryteam}[1]{\renewcommand{\@supervisoryteam}{#1}}
+
+%The director(s) of study in the declaration
+\newcommand{\@directors}{\hl{SET directors}}
+\newcommand{\directors}[1]{\renewcommand{\@directors}{#1}}
 
 % ******************************************************************************
 % *************************** Front Matter Layout ******************************
@@ -1007,6 +1033,20 @@ wish to left align your text}
 \end{singlespace}
 }
 
+% Declaration %
+
+\newenvironment{declaration}{}{
+    \vspace{5cm}
+\fbox{\fbox { \parbox { .9\linewidth} {
+Name: \@author \\
+Date: \today \\
+Award:
+\@awardsubject \\
+Director(s) of Studies:
+    \@directors
+}}}
+}
+
 % ****************************** Acknowledgements ********************************
 % The acknowledgements environment puts a large, bold, centered
 % "Acknowledgements" label at the top of the page.
@@ -1016,9 +1056,10 @@ wish to left align your text}
 \setsinglecolumn
 \chapter*{\centering \Large Acknowledgements}
 \thispagestyle{empty}
+\begin{center}
+}{
+    \end{center}
 }
-
-
 
 % ******************************* Nomenclature *********************************
 \RequirePackage[intoc]{nomencl}
@@ -1119,7 +1160,22 @@ wish to left align your text}
   \thispagestyle{empty}
  
 \fi
-
+}
+% Abstract content appears here
+{
+\\
+\noindent
+\textit{Keywords}:
+\@keywords \\
+\vspace{3cm}
+\begin{center}
+    \textbf{A thesis submitted in partial fulfilment of the requirements of \@university\space for the degree of\space\@degreetitle}\\
+    \vspace{2cm}
+        \textbf{\@author}\\
+    \vspace{2cm}
+    \textbf {Supervisory team:}
+    \@supervisoryteam \\
+\end{center}
 }
 
 
@@ -1226,10 +1282,10 @@ wish to left align your text}
     \end{center}
   }{
     % college is defined
-    \begin{minipage}[b]{0.49\textwidth}
+    \begin{minipage}[b]{0.54\textwidth}
       \flushleft\@college
     \end{minipage}
-    \begin{minipage}[b]{0.49\textwidth}
+    \begin{minipage}[b]{0.44\textwidth}
       \flushright \@degreedate
     \end{minipage}
   } % college is defined
