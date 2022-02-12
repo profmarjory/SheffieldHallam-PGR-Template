@@ -3,7 +3,7 @@
 \newcommand\fileversion{2.2.2}
 \newcommand\filedate{2016/10/20}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{PhDThesisPSnPDF}[\filedate\space A PhD thesis class file (v\fileversion)]
+\ProvidesClass{PhDThesisPSnPDF}[\filedate\space A thesis class file (v\fileversion)]
 
 % ******************************************************************************
 % **************************** Class Definition ********************************
@@ -187,8 +187,7 @@ footnotes.}
 \DeclareOption{a4paper}{\renewcommand\PHD@papersize{a4paper}}
 \DeclareOption{a5paper}{\renewcommand\PHD@papersize{a5paper}}
 \DeclareOption{letterpaper}{
-  \ClassWarning{PhDThesisPSnPDF}{The University of Cambridge
-    PhD thesis guidelines recommend using A4 or A5paper}
+  \ClassWarning{PhDThesisPSnPDF}{The university thesis guidelines recommend using A4 or A5paper}
   \renewcommand\PHD@papersize{letterpaper}
 }
 
@@ -940,6 +939,17 @@ wish to left align your text}
 \fi
 }
 
+% The supervisors displayed in the abstract.
+\newcommand{\@supervisoryteam}{\hl{SET supervisoryteam}}
+\newcommand{\supervisoryteam}[1]{\renewcommand{\@supervisoryteam}{#1}}
+
+%The director(s) of study in the declaration
+\newcommand{\@directors}{\hl{SET directors}}
+\newcommand{\directors}[1]{\renewcommand{\@directors}{#1}}
+
+% ******************************************************************************
+% The word count of the document
+% reference: https://www.overleaf.com/learn/how-to/Is_there_a_way_to_run_a_word_count_that_doesn%27t_include_LaTeX_commands%3F
 \newcommand{\detailtexcount}[1]{%
   \immediate\write18{texcount -merge -sum -q -utf8 #1.tex output.bbl > #1.wcdetail }%
   \verbatiminput{#1.wcdetail}%
@@ -950,18 +960,27 @@ wish to left align your text}
   \input{#1-words.sum} words%
 }
 
-% The word count of the document
-% reference: https://www.overleaf.com/learn/how-to/Is_there_a_way_to_run_a_word_count_that_doesn%27t_include_LaTeX_commands%3F
 \newcommand{\@wordcount}{\quickwordcount{thesis}\space}
 \newcommand{\wordcount}[1]{\renewcommand{\@wordcount}{#1}}
 
-% The supervisors displayed in the abstract.
-\newcommand{\@supervisoryteam}{\hl{SET supervisoryteam}}
-\newcommand{\supervisoryteam}[1]{\renewcommand{\@supervisoryteam}{#1}}
+% ******************************************************************************
+% Make tables easier
+\newenvironment{labelledTable}[2]
+{
+\begin{table}
+\caption{#1}
+\begin{center}
+\begin{tabular}{ #2 }
+}{
+    \end{tabular}
+\end{center}
+\end{table}
+}
 
-%The director(s) of study in the declaration
-\newcommand{\@directors}{\hl{SET directors}}
-\newcommand{\directors}[1]{\renewcommand{\@directors}{#1}}
+
+% ******************************************************************************
+
+
 
 % ******************************************************************************
 % *************************** Front Matter Layout ******************************
