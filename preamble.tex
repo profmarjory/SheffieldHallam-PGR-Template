@@ -48,7 +48,6 @@
 
 %\usepackage{algpseudocode}
 
-
 % ********************Captions and Hyperreferencing / URL **********************
 
 % Captions: This makes captions of figures use a boldfaced small font.
@@ -105,6 +104,17 @@
 
 %\usepackage[perpage]{footmisc} %Range of footnote options
 
+%% For highlighting text
+\usepackage{soul}
+%%For counting words
+\usepackage{verbatim}
+%%For writing in markdown. Ref: https://www.overleaf.com/learn/how-to/Writing_Markdown_in_LaTeX_Documents
+\use{markdown}
+
+%%For code synax highlighting
+\usepackage{minted}
+\usepackage{xcolor} % to access the named colour LightGray
+\definecolor{LightGray}{gray}{0.75}
 
 % *****************************************************************************
 % *************************** Bibliography  and References ********************
